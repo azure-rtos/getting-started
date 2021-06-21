@@ -1,0 +1,37 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "TI: Local OpenOCD",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "device": "MSP432E401Y",
+            "runToMain": true,
+            "executable": "${workspaceFolder}/build/app/msp432e_azure_iot.elf",
+            "svdFile": "${workspaceFolder}/.vscode/MSP432E401Y.svd",
+            "cwd": "${workspaceRoot}",
+            "configFiles": [
+                "board/ti_msp432_launchpad.cfg"
+            ]
+        },
+        {
+            "name": "TI: Remote",
+            "type": "cortex-debug",
+            "executable": "${workspaceFolder}/build/app/msp432e_azure_iot.elf",
+            "request": "launch",
+            "servertype": "external",
+            "gdbTarget": "${input:device.host}",
+            "runToMain": true,
+            "svdFile": "${workspaceFolder}/.vscode/MSP432E401Y.svd",
+        }
+    ],
+    "inputs": [
+        {
+            "id": "device.host",
+            "type": "promptString",
+            "default": "localhost:3333",
+            "description": "The local hostname with port for GDB to connect to"
+        }
+    ]
+}

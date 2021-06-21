@@ -1,0 +1,6 @@
+[
+    {
+        "name": "ARM GCC Cortex",
+        "toolchainFile": "${workspaceFolder}/../../cmake/arm-gcc-cortex-m4.cmake"
+    }
+]

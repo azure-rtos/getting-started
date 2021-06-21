@@ -1,0 +1,18 @@
+{
+	"folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "git.ignoreLimitWarning": true,
+        "git.autofetch": true,
+        "git.confirmSync": false,
+        "cmake.configureOnOpen": true,
+        "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+        "cmake.generator": "Ninja",
+        "files.associations": {
+            "msp.h": "c"
+        }
+    }
+}

@@ -1,0 +1,86 @@
+name: $(BuildID)_$(BuildDefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
+resources:
+  repositories:
+  - repository: Device-Lab
+    type: git
+    endpoint: self
+    name: Device-Lab/Device-Lab
+
+trigger: 
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - doc/*
+
+jobs:
+- job: TI_Build
+  pool:
+    name: 'IoT-DDE-Device-Lab'
+    demands:
+    - TIMSP432E -equals true
+  steps:
+  - checkout: self
+    clean: true
+    submodules: recursive
+  - checkout: Device-Lab
+    clean: true
+
+  # Azure CLI to start certification
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'IoT-DDE-team-subscription'
+      scriptType: 'ps'
+      scriptLocation: 'scriptPath'
+      scriptPath: '$(Build.SourcesDirectory)\Device-Lab\generate_creds.ps1'
+      arguments: '$(Build.SourcesDirectory)\getting-started\core\model'
+      useGlobalConfig: true
+    displayName: "Start Certification"
+
+  # modify config with credentials 
+  - task: PowerShell@2
+    inputs:
+      targetType: 'filePath'
+      filePath: '$(Build.SourcesDirectory)\Device-Lab\update_config.ps1'
+      arguments: > # Use this to avoid newline characters in multiline string
+        -ConfigFilePath '$(Build.SourcesDirectory)\getting-started\TI\MSP-EXP432E401Y\app\azure_config.h'
+    displayName: 'Modify config file'
+
+  # Build binary
+  - script: |
+      echo %PATH%
+      cd $(Build.SourcesDirectory)\getting-started\TI\MSP-EXP432E401Y\tools
+      .\rebuild.bat
+    displayName: "Build Binary"
+
+  # Flash binary to hardware
+  - task: PowerShell@2
+    inputs:
+      targetType: 'filePath'
+      filePath: '$(Build.SourcesDirectory)\Device-Lab\flashing_tools\flash-board.ps1'
+      arguments: > # Use this to avoid newline characters in multiline string
+        -BinPath '$(Build.SourcesDirectory)\getting-started\TI\MSP-EXP432E401Y\build\app\msp432e_azure_iot.bin'
+    displayName: 'Flash binary'
+
+  # Monitor device for successful connection to Iot Hub
+  - task: PowerShell@2
+    inputs:
+      targetType: 'filePath'
+      filePath: '$(Build.SourcesDirectory)\Device-Lab\scan_serial.ps1'
+      arguments: > # Use this to avoid newline characters in multiline string
+        -TestString 'SUCCESS: Azure IoT Hub client initialized'
+    displayName: 'Scan serial port'
+
+  # Azure CLI to run certification
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'IoT-DDE-team-subscription'
+      scriptType: 'ps'
+      scriptLocation: 'scriptPath'
+      scriptPath: '$(Build.SourcesDirectory)\Device-Lab\run_certification.ps1'
+      arguments: $(TESTID)
+      useGlobalConfig: true
+    displayName: "Run Certification"
