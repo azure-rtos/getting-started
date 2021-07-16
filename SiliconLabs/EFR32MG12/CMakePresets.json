@@ -1,0 +1,26 @@
+{
+    "version": 2,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 20,
+      "patch": 0
+    },
+    "configurePresets": [
+      {
+        "name": "debug",
+        "displayName": "Debug Config",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build",
+        "cacheVariables": {
+            "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/../../cmake/arm-gcc-cortex-m4.cmake",
+            "CMAKE_BUILD_TYPE": "Debug"
+        }
+      }
+    ],
+    "buildPresets": [
+      {
+        "name": "debug",
+        "configurePreset": "debug"
+      }
+    ]
+  }

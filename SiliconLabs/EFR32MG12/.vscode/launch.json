@@ -1,0 +1,37 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "EFR32MG12: J-Link",
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/build/app/efr32mg12_azure_iot.elf",
+            "MIMode": "gdb",
+            "miDebuggerPath": "arm-none-eabi-gdb",
+            "miDebuggerServerAddress": "localhost:3333",
+            "debugServerPath": "C:/Program Files (x86)/SEGGER/JLink/jlinkgdbservercl",
+            "debugServerArgs": "-if swd -speed 4000 -endian little -port 3333 -device EFR32MG12PXXXF1024",
+            "serverStarted": "Connected to target",
+            "filterStdout": true,
+            "stopAtEntry": false,
+            // There is no need for hardware breakpoint limits with J-Link probes because they support unlimited flash breakpoints.
+            // However, if desired, uncomment below to force use of hardware breakpoints only:
+            // "hardwareBreakpoints": {
+            //     "require": true,
+            //     "limit": 8
+            // },
+            "preLaunchTask": "Deploy (J-Link)"
+        },
+        {
+            "name": "EFR32MG12: Cortex-Debug J-Link",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype":"jlink",
+            "runToMain": true,
+            "executable": "${workspaceFolder}/build/app/efr32mg12_azure_iot.elf",
+            "device": "EFR32MG12PXXXF1024",
+            "svdFile": "${workspaceFolder}/.vscode/EFR32MG12P332F1024GM48.svd",
+        }
+    ]
+}

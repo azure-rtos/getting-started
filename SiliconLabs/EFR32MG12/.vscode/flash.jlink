@@ -1,0 +1,3 @@
+loadfile build/app/efr32mg12_azure_iot.hex
+r0
+q

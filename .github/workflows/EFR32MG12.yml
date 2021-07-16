@@ -1,0 +1,37 @@
+name: EFR32MG12
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+defaults:
+  run:
+    working-directory: SiliconLabs/EFR32MG12
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: arm-none-eabi-gcc
+        uses: ryanwinter/arm-none-eabi-gcc@master
+        with:
+          release: '10-2020-q4'
+
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@v3
+
+      - name: Build project
+        run: |
+          cmake -Bbuild -GNinja -DCMAKE_TOOLCHAIN_FILE="../../cmake/arm-gcc-cortex-m4.cmake" 
+          cmake --build build

@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Deploy (J-Link)",
+            "type": "shell",
+            "command": "jlink -if swd -speed 4000 -device EFR32MG12PXXXF1024 -commanderscript ${workspaceFolder}/.vscode/flash.jlink",
+            "problemMatcher": [],
+            "dependsOn": [ "Build" ]
+        },
+        {
+            "label": "Build",
+            "type": "cmake",
+            "command": "build",
+            "problemMatcher": "$gcc",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            // This must be commented out to run on Linux.
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": [ "/c" ]
+                }
+            }
+        }
+    ]
+}

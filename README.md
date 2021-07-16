@@ -21,6 +21,7 @@ The following guides will get you started:
 |[Renesas AE-Cloud2](Renesas/Synergy)|||
 |[Renesas RX65N Cloud Kit](Renesas/RX65N_Cloud_Kit)|![](https://github.com/azure-rtos/getting-started/workflows/RX65N-Cloud-Kit/badge.svg)||
 |[Renesas RSK+RX65N-2MB](Renesas/RSK_RX65N_2MB)|![](https://github.com/azure-rtos/getting-started/workflows/RSK-RX65N-2MB/badge.svg)||
+|[Silicon Labs EFR32MG12](SiliconLabs/EFR32MG12)|![](https://github.com/azure-rtos/getting-started/workflows/EFR32MG12/badge.svg)||
 |[STMicroelectronics B-L475E-IOT01A](STMicroelectronics/STM32L4_L4+)|![](https://github.com/azure-rtos/getting-started/workflows/STM32L4_L4+/badge.svg)|![](https://expresslogic.visualstudio.com/DeviceLab%20AzureRTOS%20GSG/_apis/build/status/azure-rtos.getting-started.stm.l475?repoName=azure-rtos%2Fgetting-started&branchName=master)|
 |[STMicroelectronics B-L4S5I-IOT01A](STMicroelectronics/STM32L4_L4+)|![](https://github.com/azure-rtos/getting-started/workflows/STM32L4_L4+/badge.svg)|![](https://expresslogic.visualstudio.com/DeviceLab%20AzureRTOS%20GSG/_apis/build/status/azure-rtos.getting-started.stm.l4s5?repoName=azure-rtos%2Fgetting-started&branchName=master)|
 
